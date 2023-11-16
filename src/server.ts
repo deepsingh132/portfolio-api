@@ -16,13 +16,16 @@ const port = process.env.PORT || 5000;
 
 // API request
 app.get(
-  "/api/v1/github/deepsingh132",
+  "/api/v1/github/pinned-repos",
   (req: Request, res: Response) => {
     console.log("Received request for pinned repos");
-    const pinnedRepos = getPinnedRepos();
-    pinnedRepos.then((data: any) => {
-      res.send(data);
-    });
+    getPinnedRepos()
+      .then((repos) => {
+        res.json({ repos });
+      })
+      .catch((error) => {
+        res.json(error);
+      });
   }
 );
 

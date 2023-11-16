@@ -17,7 +17,7 @@ interface PinnedRepos {
         }[];
       };
     };
-  }
+}
 
 export const getPinnedRepos = async () => {
   const endpoint = 'https://api.github.com/graphql'
@@ -50,6 +50,11 @@ export const getPinnedRepos = async () => {
     }
   `;
 
-  const data = await graphQLClient.request<PinnedRepos>(query);
-  return data?.viewer.pinnedItems.nodes;
+  try {
+    const data = await graphQLClient.request<PinnedRepos>(query);
+    return data.viewer.pinnedItems.nodes;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 }
