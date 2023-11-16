@@ -19,6 +19,8 @@ app.get(
   "/api/v1/github/pinned-repos",
   (req: Request, res: Response) => {
     console.log("Received request for pinned repos");
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
     getPinnedRepos()
       .then((repos: any) => {
         res.status(200).json({ repos });
