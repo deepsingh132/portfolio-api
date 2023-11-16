@@ -1,4 +1,4 @@
-import { gql,GraphQLClient } from 'graphql-request'
+const { gql, GraphQLClient } = require('graphql-request');
 
 interface PinnedRepos {
     viewer: {
@@ -51,10 +51,9 @@ export const getPinnedRepos = async () => {
   `;
 
   try {
-    const data = await graphQLClient.request<PinnedRepos>(query);
+    const data = await graphQLClient.request(query, {}) as PinnedRepos;
     return data.viewer.pinnedItems.nodes;
   } catch (error) {
     console.error(error);
-    return [];
   }
 }
